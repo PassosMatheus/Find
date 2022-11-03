@@ -1,8 +1,36 @@
 import os
 
-caminho_procura = '/Users/EG0265/Desktop/Particular/Igreja/Mocidade'
-termo_procura = 'imagem'
+caminho_procura = input('Digite um caminho: ')
+termo_procura = input('Digite um termo p/ pesquisa: ')
 
+def formata_tamanho(tamanho):
+    base = 1024
+    kilo = base
+    mega = base ** 2
+    giga = base ** 3
+    tera = base ** 4
+    peta = base ** 5
+
+    if tamanho < kilo:
+        texto = 'B'
+    elif tamanho < mega:
+        tamanho /= kilo
+        texto = 'K'
+    elif tamanho < giga:
+        tamanho /= mega
+        texto = 'M'
+    elif tamanho < tera:
+        tamanho /= giga
+        texto = 'G'
+    elif tamanho < peta:
+        tamanho /= tera
+        texto = 'T'
+    else:
+        tamanho /= peta
+        texto = 'P '
+
+    tamanho = round(tamanho, 2)
+    return f'{tamanho}{texto}'.replace('.', ',')
 
 
 conta = 0
@@ -21,6 +49,7 @@ for raiz, diretorios, arquivos in os.walk(caminho_procura):
                 print('Nome:', nome_arquivo)
                 print('Extensão:', ext_arquivo)
                 print('Tamanho:', tamanho)
+                print('Tamanho formatado:', formata_tamanho(tamanho))
             except PermissionError as e:
                 print('Sem permissão.')
             except FileNotFoundError as e:
